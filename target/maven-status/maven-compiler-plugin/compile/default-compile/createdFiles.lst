@@ -1,0 +1,6 @@
+main/java/com/mconsultants/alexa/utilities/AWSeMailService.class
+main/java/com/mconsultants/alexa/utilities/PropertyReader.class
+main/java/com/mconsultants/alexa/exception/FileReaderException.class
+main/java/com/mconsultants/alexa/UtterDevSpeechlet.class
+main/java/com/mconsultants/alexa/utilities/UtterDevContact.class
+main/java/com/mconsultants/alexa/UtterDevSpeechletRequestStreamHandler.class
