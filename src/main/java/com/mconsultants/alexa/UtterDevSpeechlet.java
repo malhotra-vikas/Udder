@@ -48,7 +48,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
     private String apiAccessToken;
     private String apiEndpoint;
 
-    private String userName;
+    private String userName = "";
     private String userEmail;
 
     /**
@@ -110,13 +110,13 @@ public class UtterDevSpeechlet implements SpeechletV2 {
         log.info("Request will be made to the following URL: {}", nameRequestUrl);
         log.info("Request will be made to the following URL: {}", emailRequestUrl);
 
-//        HttpGet httpGetName = new HttpGet(nameRequestUrl);
+        HttpGet httpGetName = new HttpGet(nameRequestUrl);
         HttpGet httpGetEmail = new HttpGet(emailRequestUrl);
 
-//        httpGetName.addHeader("Authorization", "Bearer " + apiAccessToken);
+        httpGetName.addHeader("Authorization", "Bearer " + apiAccessToken);
         httpGetEmail.addHeader("Authorization", "Bearer " + apiAccessToken);
 
-/*        try {
+        try {
             HttpResponse addressResponse = closeableHttpClient.execute(httpGetName);
             int statusCode = addressResponse.getStatusLine().getStatusCode();
 
@@ -129,7 +129,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
             } else if (statusCode == HttpStatus.SC_FORBIDDEN) {
                 log.info("Failed to authorize with a status code of {}", statusCode);
-                return  getPermissionsResponse();
+//                return getPermissionsResponse();
             } else {
                 String errorMessage = "Device Address API query failed with status code of " + statusCode;
                 log.info(errorMessage);
@@ -137,7 +137,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
         }  catch (IOException e) {
         } finally {
             log.info("Request to Address Device API completed.");
-        }*/
+        }
 
         try {
             HttpResponse addressResponse = closeableHttpClient.execute(httpGetEmail);
@@ -152,7 +152,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
             } else if (statusCode == HttpStatus.SC_FORBIDDEN) {
                 log.info("Failed to authorize with a status code of {}", statusCode);
-//                return  getPermissionsResponse();
+                return  getPermissionsResponse();
             } else {
                 String errorMessage = "Device Address API query failed with status code of " + statusCode;
                 log.info(errorMessage);
@@ -164,22 +164,24 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
         //ToDo needs to be removed soon. HACK
 
-        userName = "Vikas";
-        userEmail = "malhotra.vikas@gmail.com";
+//        userName = "Vikas";
+//        userEmail = "malhotra.vikas@gmail.com";
+        log.debug("Fetched name as - " + userName);
+        log.debug("Fetched Email as - " + userEmail);
 
         session.setAttribute("User_Name", userName);
         session.setAttribute("User_Email", userEmail);
-
+/*
         if (userEmail != null && userName != null) {
             log.debug("Saving stuff");
             UtterDevContact contact = new UtterDevContact(userEmail, userName);
 
             AmazonDynamoDB dynamoDBClient = new AmazonDynamoDBClient();
             DynamoDBMapper mapper = new DynamoDBMapper(dynamoDBClient);
-//            mapper.save(contact);
+            mapper.save(contact);
             log.debug("Saved stuff");
         }
-
+*/
 
         return getWelcomeResponse();
 
@@ -465,7 +467,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
         card.setTitle("Authorize access for name and email");
 
         Set<String> permissions = new HashSet<>();
-        //permissions.add("alexa::profile:name:read");
+        permissions.add("alexa::profile:name:read");
         permissions.add("alexa::profile:email:read");
 
         card.setPermissions(permissions);
