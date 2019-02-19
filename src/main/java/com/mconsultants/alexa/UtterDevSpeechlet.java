@@ -237,6 +237,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
         log.debug("In handleNoIntent");
         String noResponse = "No problem!! Is there anything else we can help you with today? " + propertyReader.getSpeechReprompt();
         SpeechletResponse response = newAskResponse(noResponse, false, propertyReader.getSpeechReprompt(), false);
+        card.setContent(noResponse);
         response.setCard(card);
 
         return response;
@@ -268,6 +269,8 @@ public class UtterDevSpeechlet implements SpeechletV2 {
     private SpeechletResponse handleContactUsIntent(SpeechletRequestEnvelope<IntentRequest> requestEnvelope) {
 
         IntentRequest request = requestEnvelope.getRequest();
+        SimpleCard card = new SimpleCard();
+        card.setTitle(propertyReader.getSkillName());
         Session session = requestEnvelope.getSession();
         Intent intent = request.getIntent();
         session.setAttribute("Stage", intent.getName());
@@ -294,6 +297,8 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
         PlainTextOutputSpeech outputSpeech = new PlainTextOutputSpeech();
         outputSpeech.setText(propertyReader.getEmailMessage());
+
+        card.setContent(propertyReader.getEmailMessage());
         return SpeechletResponse.newTellResponse(outputSpeech);
     }
 
@@ -303,6 +308,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
         log.debug("In handleBusinessIntent");
         SpeechletResponse response = newAskResponse(propertyReader.getSpeechBusiness(), false, propertyReader.getSpeechReprompt(), false);
+        card.setContent(propertyReader.getSpeechBusiness());
         response.setCard(card);
 
         IntentRequest request = requestEnvelope.getRequest();
@@ -319,6 +325,7 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
         log.debug("In handleConsumerIntent");
         SpeechletResponse response = newAskResponse(propertyReader.getSpeechConsumer(), false, propertyReader.getSpeechReprompt(), false);
+        card.setContent(propertyReader.getSpeechConsumer());
         response.setCard(card);
 
         IntentRequest request = requestEnvelope.getRequest();
@@ -335,6 +342,8 @@ public class UtterDevSpeechlet implements SpeechletV2 {
 
         log.debug("In handleAboutUsIntent");
         SpeechletResponse response = newAskResponse(propertyReader.getSpeechAbout(), false, propertyReader.getSpeechReprompt(), false);
+        card.setContent(propertyReader.getSpeechAbout());
+
         response.setCard(card);
 
         IntentRequest request = requestEnvelope.getRequest();
