@@ -15,7 +15,6 @@ import com.amazon.speech.ui.*;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import jdk.javadoc.internal.tool.JavadocTodo;
 import main.java.com.mconsultants.alexa.utilities.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
